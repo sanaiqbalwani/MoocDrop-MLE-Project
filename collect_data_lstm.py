@@ -158,7 +158,8 @@ def get_events_for_week(log_file, certificate_file, user_file, num_weeks, first_
     Example: get_events_for_week("../ORDERED_BerkeleyX_Stat_2.1x_1T2014-events.log", ...)
     """
     print("Starting", log_file)
-    total_weeks = 5 # Total weeks for analysis (possible for dropping out)
+    #change total weeks value to Max Value=
+    total_weeks = 10# Total weeks for analysis (possible for dropping out)
     # Ex. max_date = datetime(2014, 3, 3, 0, 0, 0, 0)
     max_date = first_day + timedelta(days=7*num_weeks)
     one_week_date = first_day + timedelta(days=7)
@@ -240,10 +241,13 @@ if __name__ == "__main__":
         #     datetime(2015, 8, 31, 8, 0, 0, 0))
         ]
     all_list = {}
-    for week_num in range(1, 6):
+    for week_num in range(1, 11):
         for course in course_list:
+            try:
                 [x_all, y_all, username_full] = get_events_for_week(course[0], course[1], course[2], week_num, course[3])
                 all_list[course[0]] = {'x_full': x_all, 'y_full': y_all, 'username_full': username_full}
+            except:
+                print("nothing found")
         with open('week_' + str(week_num) + '_data_courses.pickle', 'wb') as f:
             pickle.dump(all_list, f)
         all_list = {}
