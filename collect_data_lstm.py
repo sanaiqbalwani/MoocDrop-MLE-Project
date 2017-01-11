@@ -240,16 +240,30 @@ if __name__ == "__main__":
         #     "../../data/DelftX-EX101x-3T2015-auth_user-prod-analytics.sql",
         #     datetime(2015, 8, 31, 8, 0, 0, 0))
         ]
-    all_list = {}
+   # all_list = {}
+ #    for week_num in range(1, 11):
+ #        for course in course_list:
+ #            try:
+ #                [x_all, y_all, username_full] = get_events_for_week(course[0], course[1], course[2], week_num, course[3])
+ #                all_list[course[0]] = {'x_full': x_all, 'y_full': y_all, 'username_full': username_full}
+ #            except:
+ #                print("nothing found")
+ #        with open('week_' + str(week_num) + '_data_courses.pickle', 'wb') as f:
+ #            pickle.dump(all_list, f)
+ #        all_list = {}
+   
+#=======================join all week data================
+event_List=[]
+for course in course_list:
     for week_num in range(1, 11):
-        for course in course_list:
             try:
                 [x_all, y_all, username_full] = get_events_for_week(course[0], course[1], course[2], week_num, course[3])
-                all_list[course[0]] = {'x_full': x_all, 'y_full': y_all, 'username_full': username_full}
+                x_y_u_list= [x_all,  y_all, username_full]
+                event_List.append(x_y_u_list)
             except:
                 print("nothing found")
-        with open('week_' + str(week_num) + '_data_courses.pickle', 'wb') as f:
-            pickle.dump(all_list, f)
-        all_list = {}
-
+        with open( course[0]+ '_all_week_data.pickle', 'wb') as f:
+            pickle.dump(event_List, f)
+        event_List=[]
+        
 # At this point, main code moves to run_lstm.py
