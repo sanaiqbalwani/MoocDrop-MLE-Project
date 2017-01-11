@@ -256,14 +256,15 @@ if __name__ == "__main__":
 event_List=[]
 for course in course_list:
     for week_num in range(1, 11):
-            try:
-                [x_all, y_all, username_full] = get_events_for_week(course[0], course[1], course[2], week_num, course[3])
-                x_y_u_list= [x_all,  y_all, username_full]
-                event_List.append(x_y_u_list)
-            except:
-                print("nothing found")
-        with open( course[0]+ '_all_week_data.pickle', 'wb') as f:
-            pickle.dump(event_List, f)
+        try:
+            [x_all, y_all, username_full] = get_events_for_week(course[0], course[1], course[2], week_num, course[3])
+            x_y_u_list= [x_all,  y_all, username_full]
+            event_List.append(x_y_u_list)
+        except:
+            print("nothing found")
+    with open( course[0]+ '_all_week_data.pickle', 'wb') as f:
+        pickle.dump(event_List, f)
         event_List=[]
+        
         
 # At this point, main code moves to run_lstm.py
